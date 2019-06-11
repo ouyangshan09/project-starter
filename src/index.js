@@ -1,8 +1,10 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ReactDom from 'react-dom';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
 
-const App = () => <div>Hello world!222</div>
+const App = () => <Router history={browserHistory} routes={routes} />
 const HotApp = hot(App);
 
 ReactDom.render(
