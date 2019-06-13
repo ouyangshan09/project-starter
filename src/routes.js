@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bussiness1 } from './components/Business1/Bussiness1.component';
+// import { Bussiness1 } from './components/Business1/Bussiness1.component';
 
 const routes = [{
     path: '/',
@@ -8,6 +8,7 @@ const routes = [{
         getComponent (nextstate, callback) {
             import('./components/Business1/Bussiness1.component').then(value => {
                 console.log('value:', value);
+                callback(null, value.Bussiness1);
             }).catch(e => console.log('getComponent error:', e));
         }
         // component: Bussiness1,
