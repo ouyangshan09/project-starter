@@ -4,6 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const folderConfig = require('./folderConfig');
 const projectConfig = require('./projectConfig');
 
+const isDev = process.env.NODE_ENV === 'development';
+
+const postcssLoader = {
+    loader: 'postcss-loader',
+    options: {
+        from: path.resolve(folderConfig.config, 'postcss.config.js'),
+        sourceMap: isDev,
+    }
+};
+
 const config = {
     context: folderConfig.root,
 
@@ -29,18 +39,20 @@ const config = {
                 },
             }],
         }, {
-            test: /\.s?(c|a)ss$/,
+            test: /\.(sa|sc)ss$/,
             use: [
                 'style-loader',
                 'css-loader',
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                        from: path.resolve(folderConfig.config, 'postcss.config.js')
-                    }
-                },
+                postcssLoader,
                 'sass-loader',
             ],
+        }, {
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                postcssLoader,
+            ]
         }, {
             test: /\.(png|jpg|gif)$/,
             use: {
