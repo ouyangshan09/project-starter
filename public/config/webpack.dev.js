@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 
+process.env.NODE_ENV = 'development';
+
 const devConfig = webpackMerge(baseConfig, {
     mode: 'development',
 

@@ -33,7 +33,12 @@ const config = {
             use: [
                 'style-loader',
                 'css-loader',
-                'postcss-loader',
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        from: path.resolve(folderConfig.config, 'postcss.config.js')
+                    }
+                },
                 'sass-loader',
             ],
         }, {
