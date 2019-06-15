@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+.Bussiness1 {
+    font-size: 24px;
+    color: chocolate;
+
+    :global {
+        .style {
+            color: brown;
+        }
+
+        .title {
+            font-size: 34px;
+            color: cornflowerblue;
+        }
+
+        .content {
+            font-size: 12px;
+            color: darkred;
+        }
+    }
+}

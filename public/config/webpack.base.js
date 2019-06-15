@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const folderConfig = require('./folderConfig');
 const projectConfig = require('./projectConfig');
 
@@ -11,6 +12,21 @@ const postcssLoader = {
     options: {
         from: path.resolve(folderConfig.config, 'postcss.config.js'),
         sourceMap: isDev,
+    }
+};
+
+const cssLoader = {
+    loader: 'css-loader',
+    options: {
+        sourceMap: isDev,
+        importLoaders: 2,
+    }
+};
+
+const sassLoader = {
+    loader: 'sass-loader',
+    options: {
+        sourceMap: isDev
     }
 };
 
@@ -41,16 +57,22 @@ const config = {
         }, {
             test: /\.(sa|sc)ss$/,
             use: [
-                'style-loader',
-                'css-loader',
+                MiniCssExtractPlugin.loader,
+                Object.assign({}, cssLoader, {
+                    options: {
+                        modules: {
+                            localIdentName: isDev ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]'
+                        }
+                    }
+                }),
                 postcssLoader,
-                'sass-loader',
+                sassLoader,
             ],
         }, {
             test: /\.css$/,
             use: [
-                'style-loader',
-                'css-loader',
+                MiniCssExtractPlugin.loader,
+                cssLoader,
                 postcssLoader,
             ]
         }, {
@@ -74,7 +96,24 @@ const config = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
+        new MiniCssExtractPlugin({
+            filename: isDev ? '[name].css' : '[name].[hash].css',
+            chunkFilename: isDev ? '[id].css' : '[id].[hash].css'
+        }),
     ],
+
+    optimization: {
+        splitChunks: {
+            // cacheGroups: {
+            //     styles: {
+            //         name: 'styles',
+            //         test: /\.css$/,
+            //         chunks: 'all',
+            //         enforce: true,
+            //     }
+            // }
+        }
+    },
 };
 
 module.exports = config;

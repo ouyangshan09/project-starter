@@ -151,3 +151,13 @@ class CustomError extends Error {
 6. babel-preset-env 把stage-x 等标准全部移除，需要自己手动配置
 7. babel官方的相关的插件命名空间全部替换为@babel/xx
 8. 
+
+## 登录失败标准
+* token不存在（token === null）
+* ~token过期（本地时间大于token持续时间）~，过期就是不存在
+* 其它同源页面传递过来的token和本地token不一致
+* 使用token请求接口，返回code=700错误
+
+## 登录成功数据如何传递
+* 同源使用cookies或localStorage
+* 非同源使用url传递
