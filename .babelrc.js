@@ -1,4 +1,6 @@
-{
+const isDev = process.env.NODE_ENV === 'development';
+
+module.exports = {
     "presets": [
         "@babel/preset-react",
         ["@babel/preset-env", {
@@ -25,6 +27,14 @@
             "libraryName": "antd",
             "libraryDirectory": "lib",
             "style": "css"
+        }],
+        ["react-css-modules", {
+            "generateScopedName": isDev ? "[name]_[local]_[hash:base64:3]" : "[hash:base64:4]",
+            "filetypes": {
+                ".scss": {
+                    "syntax": "postcss-scss",
+                },
+            }
         }]
     ]
 }
