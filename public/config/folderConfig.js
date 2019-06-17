@@ -2,6 +2,8 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '../../');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const config = {
     root: root,
     src: path.join(root, 'src'),
@@ -15,7 +17,9 @@ const config = {
     vendors: [
         'redux',
         'react',
-        'react-dom',
+        'history',
+        isDev ? '@hot-loader\\react-dom' : 'react-dom',
+        isDev && 'react-hot-loader',
         'react-redux',
         'react-router',
         'react-router-redux',

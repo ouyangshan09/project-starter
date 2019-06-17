@@ -4,13 +4,12 @@ module.exports = {
     "presets": [
         "@babel/preset-react",
         ["@babel/preset-env", {
-            "useBuiltIns": "usage",
-            "corejs": 3,
             "targets": {
                 "edge": "17",
                 "firefox": "60",
                 "chrome": "60",
                 "safari": "11.1",
+                "ie": "8"
             },
         }],
     ],
@@ -21,8 +20,8 @@ module.exports = {
         "@babel/plugin-proposal-function-bind",
         "@babel/plugin-proposal-export-default-from",
         "@babel/plugin-proposal-export-namespace-from",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties", { "loose": false }],
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["import", {
             "libraryName": "antd",
             "libraryDirectory": "lib",

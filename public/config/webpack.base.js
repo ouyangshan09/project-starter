@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const folderConfig = require('./folderConfig');
 const projectConfig = require('./projectConfig');
 
@@ -85,33 +86,43 @@ const config = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
-            title: projectConfig.title,
-            template: path.join(folderConfig.resource, 'index.html'),
-            favicon: path.join(folderConfig.resource, 'img', 'favicon.ico'),
-        }),
         // 在业务内部定义process.env环境变量值
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
             }
         }),
+        new webpack.DllReferencePlugin({
+            context: folderConfig.root,
+            manifest: path.join(folderConfig.build, 'libs', 'vendor-manifest.json')
+        }),
         new MiniCssExtractPlugin({
             filename: isDev ? '[name].css' : '[name].[hash].css',
             chunkFilename: isDev ? '[id].css' : '[id].[hash].css'
         }),
+        new HtmlWebpackPlugin({
+            title: projectConfig.title,
+            template: path.join(folderConfig.resource, 'index.html'),
+            favicon: path.join(folderConfig.resource, 'img', 'favicon.ico'),
+        }),
+        new AddAssetHtmlPlugin([
+            { filepath: path.resolve(folderConfig.build, 'libs', '*.dll.js') },
+            // TODO 编写自动化脚本处理polyfill的打包
+            { filepath: path.resolve(folderConfig.root, 'node_modules/core-js/stable/index.js') },
+            { filepath: path.resolve(folderConfig.root, 'node_modules/regenerator-runtime/runtime.js') },
+        ]),
     ],
 
     optimization: {
         splitChunks: {
-            // cacheGroups: {
-            //     styles: {
-            //         name: 'styles',
-            //         test: /\.css$/,
-            //         chunks: 'all',
-            //         enforce: true,
-            //     }
-            // }
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true,
+                }
+            }
         }
     },
 };
