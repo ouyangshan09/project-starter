@@ -2,16 +2,19 @@ const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
     "presets": [
-        "@babel/preset-react",
         ["@babel/preset-env", {
+            // "useBuiltIns": "usage",
+            // "corejs": "3",
+            "modules": false,
             "targets": {
                 "edge": "17",
                 "firefox": "60",
                 "chrome": "60",
                 "safari": "11.1",
-                "ie": "8"
+                "ie": "9"
             },
         }],
+        "@babel/preset-react",
     ],
     "plugins": [
         "@babel/plugin-syntax-import-meta",

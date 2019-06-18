@@ -11,7 +11,8 @@
     "start": "node scripts/development.server.js",
     "start:mock": "",
     "dll:dev": "cross-env NODE_ENV=development webpack --config ./public/config/webpack.dll.js --progress --profile --bail",
-    "build": "cross-env NODE_ENV=production node public/config/webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./public/config/webpack.prod.js --progress --profile --bail",
+    "build:dev": "cross-env NODE_ENV=development webpack --config ./public/config/webpack.prod.js --progress --profile --bail",
     "mock": "echo 1"
   },
   "repository": {
