@@ -3,9 +3,17 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { App } from './routes/App/App.component';
 
-let HotApp = hot(App);
+const render = Component => {
+    ReactDom.render(
+        <Component />,
+        document.getElementById('root'),
+    )
+}
 
-ReactDom.render(
-    <HotApp />,
-    document.getElementById('root'),
-);
+render(hot(App));
+
+if (module.hot) {
+    module.hot.accept('./routes/App/App.component.jsx', () => {
+        render(hot(App));
+    });
+}
