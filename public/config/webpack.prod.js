@@ -10,6 +10,10 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = webpackMerge(baseConfig,  {
     mode: isProd ? 'production' : 'development',
 
+    entry: {
+        app: path.join(folderConfig.src, 'index.js'),
+    },
+
     output: {
         publicPath: folderConfig.deploy,
         path: folderConfig.build,
