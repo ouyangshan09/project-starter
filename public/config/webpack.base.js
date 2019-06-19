@@ -107,10 +107,6 @@ const config = {
         }),
         new AddAssetHtmlPlugin([
             { filepath: path.resolve(folderConfig.build, 'libs', '*.dll.js') },
-            // TODO 编写自动化脚本处理polyfill的打包
-            // { filepath: path.resolve(folderConfig.build, 'libs', '*.polyfill.js') },
-            { filepath: path.resolve(folderConfig.root, 'node_modules/core-js/stable/index.js') },
-            { filepath: path.resolve(folderConfig.root, 'node_modules/regenerator-runtime/runtime.js') },
         ]),
     ],
 
