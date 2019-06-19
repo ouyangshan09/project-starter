@@ -38,5 +38,21 @@ module.exports = {
                 },
             }
         }]
-    ]
+    ],
+    "env": {
+        "test": {
+            "presets": [
+                ["@babel/preset-env", {
+                    "targets": {
+                        "edge": "17",
+                        "firefox": "60",
+                        "chrome": "60",
+                        "safari": "11.1",
+                        "ie": "9"
+                    },
+                }],
+                "@babel/preset-react",
+            ]
+        }
+    }
 }
