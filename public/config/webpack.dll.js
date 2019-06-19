@@ -9,21 +9,21 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const vendors = folderConfig.vendors.filter(v => v);
 
+const prefix = isDev ? '-dev' : '';
+
 module.exports = {
     mode: isDev ? 'development' : 'production',
     entry: {
-        vendor: [
-            // path.resolve(folderConfig.src, 'polyfill.js')0
-        ].concat(vendors),
+        vendor: vendors,
     },
     output: {
         path: path.join(folderConfig.build, 'libs'),
-        filename: '[name].dll.js',
+        filename: isDev ? `[name]${prefix}.dll.js` : '[name].dll.js',
         library: '[name]_[hash]',
     },
     plugins: [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['libs/*']
+            cleanOnceBeforeBuildPatterns: [`libs/[name]${prefix}.dll.js`, `libs/[name]${prefix}-manifest.json`],
         }),
         new webpack.DefinePlugin({
             'process.env': {
@@ -32,23 +32,23 @@ module.exports = {
         }),
         new webpack.DllPlugin({
             context: folderConfig.root,
-            path: path.join(folderConfig.build, 'libs', '[name]-manifest.json'),
+            path: path.join(folderConfig.build, 'libs', `[name]${prefix}-manifest.json`),
             name: '[name]_[hash]'
         }),
     ],
     optimization: {
         minimizer: [
             new TerserPlugin({
-                cache: true,
+                cache: isDev === false,
                 parallel: true,
-                sourceMap: true,
+                sourceMap: isDev,
                 terserOptions: {
-                    warnings: true,
+                    warnings: !isDev,
                     compress: {
                         // 删除log
-                        drop_console: false,
+                        drop_console: !isDev,
                         // 打开警告
-                        warnings: true
+                        warnings: !isDev
                     }
                 },
             }),
