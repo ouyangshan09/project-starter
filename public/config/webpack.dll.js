@@ -6,7 +6,6 @@ const folderConfig = require('./folderConfig');
 
 const isDev = process.env.NODE_ENV === 'development';
 
-
 const vendors = folderConfig.vendors.filter(v => v);
 
 const prefix = isDev ? '-dev' : '';
@@ -43,7 +42,6 @@ module.exports = {
                 parallel: true,
                 sourceMap: isDev,
                 terserOptions: {
-                    warnings: !isDev,
                     compress: {
                         // 删除log
                         drop_console: !isDev,

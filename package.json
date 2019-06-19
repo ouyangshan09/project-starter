@@ -11,7 +11,7 @@
     "start": "node scripts/development.server.js",
     "start:mock": "",
     "dll": "node ./scripts/build.dll.js",
-    "dll:dev": "cross-env NODE_ENV=development webpack --config ./public/config/webpack.dll.js --progress --profile --bail",
+    "dll:dev": "cross-env NODE_ENV=development node ./scripts/build.dll.js",
     "polyfill": "node ./scripts/buildPolyfill.js",
     "build": "cross-env NODE_ENV=production webpack --config ./public/config/webpack.prod.js --progress --profile --bail",
     "build:dev": "cross-env NODE_ENV=development webpack --config ./public/config/webpack.prod.js --progress --profile --bail",
