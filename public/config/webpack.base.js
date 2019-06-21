@@ -94,7 +94,7 @@ const config = {
         }),
         new webpack.DllReferencePlugin({
             context: folderConfig.root,
-            manifest: path.join(folderConfig.build, 'libs', `vendor${isDev ? '-dev' : ''}-manifest.json`)
+            manifest: path.join(folderConfig.build, 'libs', 'vendor-manifest.json')
         }),
         new MiniCssExtractPlugin({
             filename: isDev ? '[name].css' : '[name].[hash].css',
@@ -106,7 +106,7 @@ const config = {
             favicon: path.join(folderConfig.resource, 'img', 'favicon.ico'),
         }),
         new AddAssetHtmlPlugin([
-            { filepath: path.resolve(folderConfig.build, 'libs', `*${isDev ? '-dev' : ''}.dll.js`) },
+            { filepath: path.resolve(folderConfig.build, 'libs', isDev ? 'vendor.dll.js' : 'vendor.min.dll.js') },
         ]),
     ],
 

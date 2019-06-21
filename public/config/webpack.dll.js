@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const vendors = folderConfig.vendors.filter(v => v);
 
-const prefix = isDev ? '-dev' : '';
+// dev vendor.dll.js, prod vendor.min.dll.js
 
 module.exports = {
     mode: isDev ? 'development' : 'production',
@@ -17,12 +17,13 @@ module.exports = {
     },
     output: {
         path: path.join(folderConfig.build, 'libs'),
-        filename: isDev ? `[name]${prefix}.dll.js` : '[name].dll.js',
+        // filename: isDev ? `[name]${prefix}.dll.js` : '[name].dll.js',
+        filename: isDev ? '[name].dll.js' : '[name]-[hash].min.dll.js',
         library: '[name]_[hash]',
     },
     plugins: [
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: [`libs/[name]${prefix}.dll.js`, `libs/[name]${prefix}-manifest.json`],
+            cleanOnceBeforeBuildPatterns: [`**/*`],
         }),
         new webpack.DefinePlugin({
             'process.env': {
@@ -31,7 +32,7 @@ module.exports = {
         }),
         new webpack.DllPlugin({
             context: folderConfig.root,
-            path: path.join(folderConfig.build, 'libs', `[name]${prefix}-manifest.json`),
+            path: path.join(folderConfig.build, 'libs', '[name]-manifest.json'),
             name: '[name]_[hash]'
         }),
     ],
