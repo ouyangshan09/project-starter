@@ -106,7 +106,7 @@ const config = {
             favicon: path.join(folderConfig.resource, 'img', 'favicon.ico'),
         }),
         new AddAssetHtmlPlugin([
-            { filepath: path.resolve(folderConfig.build, 'libs', isDev ? 'vendor.dll.js' : 'vendor.min.dll.js') },
+            { filepath: path.resolve(folderConfig.build, 'libs', isDev ? 'vendor.dll.js' : 'vendor-*.min.dll.js') },
         ]),
     ],
 
