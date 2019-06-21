@@ -49,6 +49,9 @@ const config = {
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
+            include: [
+                folderConfig.src,
+            ],
             use: [{
                 loader: 'babel-loader',
                 options: {
@@ -57,6 +60,9 @@ const config = {
             }],
         }, {
             test: /\.(sa|sc)ss$/,
+            include: [
+                folderConfig.src,
+            ],
             use: [
                 MiniCssExtractPlugin.loader,
                 Object.assign({}, cssLoader, {
@@ -71,6 +77,10 @@ const config = {
             ],
         }, {
             test: /\.css$/,
+            include: [
+                folderConfig.src,
+                folderConfig.resource,
+            ],
             use: [
                 MiniCssExtractPlugin.loader,
                 cssLoader,
@@ -78,6 +88,9 @@ const config = {
             ]
         }, {
             test: /\.(png|jpg|gif)$/,
+            include: [
+                folderConfig.resource,
+            ],
             use: {
                 loader: 'url-loader',
                 options: { limit: 8192 },
