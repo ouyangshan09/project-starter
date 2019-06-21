@@ -13,3 +13,4 @@
 /bash.exe.stackdump
 /package-lock.json
 /build
+/test/__snapshots__
