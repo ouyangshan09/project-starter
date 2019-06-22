@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const folderConfig = require('./folderConfig');
 const projectConfig = require('./projectConfig');
 
@@ -29,6 +30,25 @@ const sassLoader = {
     options: {
         sourceMap: isDev
     }
+};
+
+const lodashOptions = {
+    caching: true,
+    chaining: true,
+    cloning: true,
+    coercions: true,
+    collections: true,
+    currying: true,
+    deburring: true,
+    exotics: true,
+    flattening: true,
+    guards: true,
+    memoizing: true,
+    metadata: true,
+    paths: true,
+    placeholders: true,
+    shorthands: true,
+    unicode: true,
 };
 
 const config = {
@@ -123,6 +143,7 @@ const config = {
         new AddAssetHtmlPlugin([
             { filepath: path.resolve(folderConfig.build, 'libs', isDev ? 'vendor.dll.js' : 'vendor-*.min.dll.js') },
         ]),
+        new LodashModuleReplacementPlugin(lodashOptions),
     ],
 
     optimization: {

@@ -37,7 +37,8 @@ module.exports = {
                     "syntax": "postcss-scss",
                 },
             }
-        }]
+        }],
+        "lodash",
     ],
     "env": {
         "test": {
