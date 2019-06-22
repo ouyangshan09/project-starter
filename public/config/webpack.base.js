@@ -37,18 +37,23 @@ const config = {
     entry: {
         app: [
             path.join(folderConfig.src, 'index.js')
-        ]
+        ],
+        // 测试多入口的splitChunks
+        // app2: path.join(folderConfig.src, 'split.index.js')
     },
 
     output: null,
 
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
 
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
+            include: [
+                folderConfig.src,
+            ],
             use: [{
                 loader: 'babel-loader',
                 options: {
@@ -57,6 +62,9 @@ const config = {
             }],
         }, {
             test: /\.(sa|sc)ss$/,
+            include: [
+                folderConfig.src,
+            ],
             use: [
                 MiniCssExtractPlugin.loader,
                 Object.assign({}, cssLoader, {
@@ -71,6 +79,10 @@ const config = {
             ],
         }, {
             test: /\.css$/,
+            include: [
+                folderConfig.src,
+                folderConfig.resource,
+            ],
             use: [
                 MiniCssExtractPlugin.loader,
                 cssLoader,
@@ -78,6 +90,9 @@ const config = {
             ]
         }, {
             test: /\.(png|jpg|gif)$/,
+            include: [
+                folderConfig.resource,
+            ],
             use: {
                 loader: 'url-loader',
                 options: { limit: 8192 },
@@ -111,13 +126,36 @@ const config = {
     ],
 
     optimization: {
+        runtimeChunk: 'single',
         splitChunks: {
+            minSize: 30000,
+            // 指的是被'entry'引用次数，不是被其它模块引用次数, 这里的'entry'指的是webpack配置中的'entry'
+            minChunks: 1,
+            maxInitialRequests: 4,
+            maxAsyncRequests: 8,
+            automaticNameDelimiter: '--',
             cacheGroups: {
                 styles: {
                     name: 'styles',
                     test: /\.css$/,
                     chunks: 'all',
                     enforce: true,
+                },
+                commons: {
+                    chunks: 'all',
+                    name: 'commons',
+                    maxAsyncRequests: 6,
+                    minChunks: 3,
+                },
+                bussiness: {
+                    chunks: 'all',
+                    name: 'bussiness',
+                    test: /src/,
+                    // test: (module, chunks) => {
+                    //     return /utils/.test(module.context);
+                    // },
+                    maxAsyncRequests: 6,
+                    minChunks: 10,
                 }
             }
         }
