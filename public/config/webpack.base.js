@@ -57,13 +57,15 @@ const config = {
     entry: {
         app: [
             path.join(folderConfig.src, 'index.js')
-        ]
+        ],
+        // 测试多入口的splitChunks
+        // app2: path.join(folderConfig.src, 'split.index.js')
     },
 
     output: null,
 
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
 
     module: {
