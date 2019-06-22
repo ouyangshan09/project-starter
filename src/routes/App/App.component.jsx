@@ -6,9 +6,19 @@ import {
 } from 'react-router';
 import { browerHistory } from '../../utils/history';
 import { Bussiness1 } from '../../components/Business1/Bussiness1.component';
-import { Login } from '../../components/Login/Login.component';
 import '../../utils/test1';
 import '../../utils/test2';
+
+const AsyncComponent = React.lazy(() => import(/* webpackChunkName: "Login" */ '../../components/Login/Login.component'));
+
+const Test = () => {
+    return (
+        <React.Suspense fallback={() => <div>111</div>}>
+            <AsyncComponent />
+        </React.Suspense>
+    )
+}
+
 
 /**
  * App路由
@@ -19,7 +29,7 @@ export const App = props => {
         <Router history={browerHistory}>
             {/* 授权验证 */}
             <Route exact path='/' component={Bussiness1} />
-            <Route path='/login' component={Login} />
+            <Route path='/login' component={Test} />
         </Router>
     )
 }

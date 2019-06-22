@@ -10,3 +10,7 @@ export const Login = props => {
         </div>
     )
 }
+
+
+
+export default Login;
