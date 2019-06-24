@@ -3,6 +3,7 @@
 序号 | 修订日期    | 修订内容 | 修订人 | 评审人
 ---- | ---------- | -------- | ----- | -----
 01   | 2019-06-07 | 初稿     | 欧阳 | -
+02   | 2019-06-23 | 初稿     | 欧阳 | -
 
 ## 目录
 
@@ -35,11 +36,6 @@
 19. 自动化工具，根据后端文档或者后端controller.java文件创建api.js接口
 20. 统一标准的Error处理格式
 
-### 未来需求
-* 快速部署
-* 快速创建项目 
-* 编译插件化，保留可配置功能 
-
 ## 功能
 1. 打包代码
 2. 打包css
@@ -48,9 +44,9 @@
 5. 热更新和局部热更新
 6. 模板文件自动打包
 7. 单元测试和react测试
-8. 自动部署
-9. eslint检查和vscode代码格式化
-10. mock数据服务
+8. ~自动部署~
+9. ~eslint检查和vscode代码格式化~
+10. ~mock数据服务~
 
 ## 涉及知识
 1. babel 
@@ -78,7 +74,7 @@
 |-- test 测试用例
 |-- scripts 部署脚本
 |-- dockerfile docker服务配置
-|-- CHANGELOG 项目版本变更说明（版本发布说明）
+|-- CHANGELOG.md 项目版本变更说明（版本发布说明）
 |-- CONTRIBUTING.md git提交规范
 ```
 
@@ -141,6 +137,14 @@ class CustomError extends Error {
 }
 ```
 
+### 未来目标需求
+* 统一cli工具
+     * 快速部署
+     * 快速创建项目 
+     * 编译插件化，保留可配置功能 
+* 设计标准 业务格式和模板，actions，utils，constants，components
+* ast, 自动输出标准功能函数*.d.ts文件，针对actions，utils，constants，components
+
 
 ## 概要设计
 
@@ -151,11 +155,16 @@ class CustomError extends Error {
 2. .babelrc 和6.x 变得完全不一致了，.babelrc 只能应用于单项目范围内的代码，不能应用`node_modules`、`link package`、`...` 等相关范围了
 3. babel.config.js 可以根据环境变量设计不同的配置，它会覆盖.babelrc中的内容，它可以应用在`node_modules, link package，momopackage`等项目范围中，它的应用更加广泛
 它不能局限为某个情况设计配置，因为它可能会和其它一些配置冲突，造成不可预估的错误
-4. react-hot-loader 使用方法改变，具体可看官方文档`https://github.com/gaearon/react-hot-loader`
+4. ~react-hot-loader 使用方法改变~，具体可看官方文档`https://github.com/gaearon/react-hot-loader`
 5. react version > `16.6`，需要使用热更新必须，添加@hot-loader/react-dom
 6. babel-preset-env 把stage-x 等标准全部移除，需要自己手动配置
 7. babel官方的相关的插件命名空间全部替换为@babel/xx
-8. 
+8. @babel/polyfill废弃，新的替代品为core-js@3.x
+
+## 其它小坑记录
+1. 不要使用`npm`安装@babel相关联的依赖，总是会出现莫名其妙的问题，例如配置动态import语法不生效, 改用`yarn`方可解决
+2. `extract-text-webpack-plugin`废弃，替代品：`mini-css-extract-plugin`
+3. webpack4有2种不同的`mode`, `development`, `production`, 开发中需要明确配置
 
 ## 登录失败标准
 * token不存在（token === null）
