@@ -70,7 +70,7 @@ const config = {
 
     module: {
         rules: [{
-            test: /\.(js|jsx)$/,
+            test: /\.(js|jsx|ts|tsx)$/,
             include: [
                 folderConfig.src,
             ],

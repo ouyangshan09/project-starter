@@ -14,6 +14,7 @@ module.exports = {
                 "ie": "9"
             },
         }],
+        "@babel/preset-typescript",
         "@babel/preset-react",
     ],
     "plugins": [
